@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="/fragments/head :: head"></head>
+  <style>
+    .search {
+      display: none;
+      width: 100px;
+      height: 100px;
+      background-color: pink;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <input onkeyup="search()" type="search" name="query" id="search" />
+      <div class="search">
+        <h2>Search Result</h2>
+      </div>
+    </div>
+    <div th:replace="/fragments/header :: header"></div>
+
+    <div class="container">
+      <div th:replace="/fragments/posts :: posts(posts=${posts})"></div>
+    </div>
+
+    <footer th:replace="/fragments/footer :: footer"></footer>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+  <script>
+    const search = () => {
+      console.log("Hooked Up.../././")
+      let query = $("#search").val()
+      if (query == "") {
+        $(".search").hide()
+      } else {
+        console.log(query)
+        let url = "http://localhost:8080/search/${query}"
+        fetch(url)
+          .then((response) => {
+            console.log("i am respons" + response)
+
+            return response.json()
+          })
+          .then((data) => {
+            console.log(data)
+
+            $(".search").html(text)
+            $(".search").show()
+          })
+        console.log(query)
+        $(".search").show()
+      }
+    }
+  </script>
+</html>
